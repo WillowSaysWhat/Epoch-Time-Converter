@@ -4,16 +4,16 @@
 //
 //  Created by Huw Williams on 28/08/2024.
 //
-
+// This is the Time Picker From.
+// It is used multiple times in HomeView
 import SwiftUI
 import TipKit
 
 struct UNIXpickerForm: View {
-    
+    // Consts for 
     let width: CGFloat = 60
     let height: CGFloat = 40
     let radius: CGFloat = 12
-    let titleX: CGFloat = -85
     let heading: String
     let subHeading: String
     @State var showAlert = false
@@ -37,15 +37,17 @@ struct UNIXpickerForm: View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(.formGrey)
-            VStack {
+            VStack(alignment: .leading) {
                 Text(heading)
-                    .offset(x: titleX)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .bold()
                     .padding(.all)
-                HStack(alignment: .center) {
+                    
+                HStack {
                     DatePicker("", selection: $controller.date)
                     Button {
                         textFieldOutput = controller.setEpoch(tag: tag)
-                        // UIPasteboard.general.string = controller.epochTime
+                        
                         
                                 }label: {
                         ZStack {
@@ -56,12 +58,12 @@ struct UNIXpickerForm: View {
                                 .foregroundColor(.white)
                         }
                     }
-                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
+                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
                 // copy format row
                 HStack {
                     TextField("<t:000000000:f>", text: $textFieldOutput) // try making this into a method call.
                         .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
+                        .frame(width: 185)
                         
                     Button {
                         controller.copyToClipboard(tag: tag)
@@ -82,9 +84,10 @@ struct UNIXpickerForm: View {
                     
                 
                 }
-                .offset(x: 46)
+                .padding(EdgeInsets(top: 0, leading: 120, bottom: 0, trailing: 0))
+                
                 Text(subHeading)
-                    .font(.caption2)
+                    .font(.callout)
                     .padding(.all)
             }
         }.padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))

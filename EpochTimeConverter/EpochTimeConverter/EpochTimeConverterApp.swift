@@ -6,17 +6,12 @@
 //
 
 import SwiftUI
-import TipKit
+
 @main
 struct EpochTimeConverterApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .task {
-                    try? Tips.configure([
-                        .datastoreLocation(.applicationDefault)])
-                }
-                
         }
     }
 }

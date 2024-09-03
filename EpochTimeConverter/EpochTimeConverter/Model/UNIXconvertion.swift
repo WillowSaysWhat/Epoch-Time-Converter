@@ -9,7 +9,8 @@ import Foundation
 
 class UNIXconvertion : ObservableObject {
        
-    
+    // converts the date-time variable into epoch/UNIX time stamp and returns it as a string.
+    // type casts the Double to a string so there is no decimal. This creates an output without milliseconds. 
     func convertToEpoch(date: Date) -> String{
         
         let unixTime = date.timeIntervalSince1970.rounded()
@@ -19,6 +20,8 @@ class UNIXconvertion : ObservableObject {
         return unixFormatted
         
     }
+    
+    
     
     
 }
