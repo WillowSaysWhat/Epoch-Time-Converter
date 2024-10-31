@@ -19,9 +19,6 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 
-                
-                
-                
                 ScrollView {
                     
                     UNIXpickerForm(controller: controller, tag: "long", heading: "Long Date & Time", subHeading: "eg: Mission step off 01 January, 2024 9:01 AM")

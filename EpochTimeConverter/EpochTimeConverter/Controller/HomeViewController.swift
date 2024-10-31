@@ -38,13 +38,13 @@ class HomeViewController: ObservableObject {
             self.epochTimeAbb = "<t:\(self.model.convertToEpoch(date: self.date)):d>"
             return self.epochTimeAbb
         case "rel":
-            self.epochTimeRel = "<t:\(self.model.convertToEpoch(date: self.date)):d>"
+            self.epochTimeRel = "<t:\(self.model.convertToEpoch(date: self.date)):R>"
             return self.epochTimeRel
         case "tShort":
             self.epochTimeTimeShort = "<t:\(self.model.convertToEpoch(date: self.date)):t>"
             return self.epochTimeTimeShort
         case "dayDateTime":
-            self.epochTimeDayDateTime = "<t:\(self.model.convertToEpoch(date: self.date)):t>"
+            self.epochTimeDayDateTime = "<t:\(self.model.convertToEpoch(date: self.date)):F>"
             return self.epochTimeDayDateTime
         default:
             self.epochTimeLong = "#ERROR"

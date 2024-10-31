@@ -33,18 +33,21 @@ struct UNIXpickerForm: View {
         
     }
     var body: some View {
-        
+        // manually build Form
         ZStack {
+            // Grey background to the form
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(.formGrey)
+            
             VStack(alignment: .leading) {
                 Text(heading)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .bold()
                     .padding(.all)
-                    
+                // beginning of the user input.
                 HStack {
                     DatePicker("", selection: $controller.date)
+                    // Apply button
                     Button {
                         textFieldOutput = controller.setEpoch(tag: tag)
                         
@@ -59,12 +62,12 @@ struct UNIXpickerForm: View {
                         }
                     }
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
-                // copy format row
+                // visual representation of the epoch snippet
                 HStack {
                     TextField("<t:000000000:f>", text: $textFieldOutput) // try making this into a method call.
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 185)
-                        
+                    // copy button.
                     Button {
                         controller.copyToClipboard(tag: tag)
                         showAlert = true
@@ -78,7 +81,7 @@ struct UNIXpickerForm: View {
                                 .foregroundColor(.white)
                         }
                     }
-                .alert(isPresented: $showAlert) {
+                .alert(isPresented: $showAlert) { // popup that notifies the user.
                     Alert(title: Text("Copied"))
                 }
                     
@@ -86,6 +89,7 @@ struct UNIXpickerForm: View {
                 }
                 .padding(EdgeInsets(top: 0, leading: 120, bottom: 0, trailing: 0))
                 
+                // explains the type of epoch snippet
                 Text(subHeading)
                     .font(.callout)
                     .padding(.all)
