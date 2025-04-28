@@ -10,34 +10,27 @@ import SwiftUI
 import TipKit
 
 struct UNIXpickerForm: View {
-    // Consts for 
+    @EnvironmentObject var controller: HomeViewController
+    let tag: String
+    let heading: String
+    let subHeading: String
+    // Consts for
     let width: CGFloat = 60
     let height: CGFloat = 40
     let radius: CGFloat = 12
-    let heading: String
-    let subHeading: String
+    
     @State var showAlert = false
     
     @State var textFieldOutput: String = "<t:000000000:f>"
     
-    let tag: String
-    @ObservedObject var controller: HomeViewController
     
-    init(controller: HomeViewController, tag: String, heading:String, subHeading: String) {
-        
-        self.controller = controller
-        self.tag = tag
-        self.heading = heading
-        self.subHeading = subHeading
-        
-        
-    }
+    
     var body: some View {
         // manually build Form
         ZStack {
             // Grey background to the form
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.formGrey)
+                .foregroundColor(Color.formGrey)
             
             VStack(alignment: .leading) {
                 Text(heading)
@@ -46,6 +39,7 @@ struct UNIXpickerForm: View {
                     .padding(.all)
                 // beginning of the user input.
                 HStack {
+                    Spacer()
                     DatePicker("", selection: $controller.date)
                     // Apply button
                     Button {
@@ -61,15 +55,16 @@ struct UNIXpickerForm: View {
                                 .foregroundColor(.white)
                         }
                     }
-                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
                 // visual representation of the epoch snippet
                 HStack {
+                    Spacer()
                     TextField("<t:000000000:f>", text: $textFieldOutput) // try making this into a method call.
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 185)
                     // copy button.
                     Button {
-                        controller.copyToClipboard(tag: tag)
+                        controller.copyToClipboard()
                         showAlert = true
                                 }
                 label: {
@@ -87,24 +82,69 @@ struct UNIXpickerForm: View {
                     
                 
                 }
-                .padding(EdgeInsets(top: 0, leading: 120, bottom: 0, trailing: 0))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
                 
                 // explains the type of epoch snippet
                 Text(subHeading)
                     .font(.callout)
-                    .padding(.all)
+                    
             }
-        }.padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+        }
     }
 }
 
-
-#Preview {
-    UNIXpickerForm(controller: HomeViewController(), tag: "long", heading: "Long Date & Time", subHeading: "eg: 01 January, 2024 9:01 AM")
-}
 
 struct Copied: Tip {
     var title: Text {
         Text("Copied!")
     }
+}
+
+struct NewUNIXpickerForm: View {
+    @EnvironmentObject var controller: HomeViewController
+    let title: String
+    let bodyOfText: String
+    let tag: String
+    let colour: Color
+    @Binding var isPickerUP: Bool
+    @State var showAlert = false
+    //@State var displayDate: Double
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundColor(Color.formGrey)
+            VStack(alignment: .leading) {
+                HStack(alignment: .firstTextBaseline) {
+                    Image("brand")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20)
+                        .clipShape(Circle())
+                    
+                    Text(title)
+                        .font(.title2)
+                        .fontWeight(.black)
+                        .foregroundStyle(colour)
+                    Image(systemName: "crown.fill")
+                        .foregroundStyle(colour)
+                    Spacer()
+                }// hstack title
+                
+                Text("\(bodyOfText)" + controller.setMessage(tag: tag) )
+                    .font(.subheadline)
+                    .padding(.horizontal, 16)
+                    
+                
+            } // vstack
+            .padding()
+            
+        } // Top zstack
+    }// some view
+}
+
+
+#Preview {
+    HomeView()
+        .environmentObject(HomeViewController())
+        
 }

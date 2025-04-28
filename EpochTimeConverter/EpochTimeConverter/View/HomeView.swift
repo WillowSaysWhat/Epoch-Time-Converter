@@ -12,47 +12,112 @@ struct HomeView: View {
     
     
     // instance of the controller for this view.
-    @ObservedObject var controller = HomeViewController()
-    	
+    @EnvironmentObject var controller: HomeViewController
+    @Namespace private var animation
+    @State var isPickerUP = false
+    // to pass the correct info to UNIXpickerForm
+    @State var heading: String = ""
+    @State var subHeading: String = ""
+    @State var tag: String = ""
     
     var body: some View {
         NavigationView {
-            ZStack {
+            ZStack { // places help button on top
                 
-                ScrollView {
-                    
-                    UNIXpickerForm(controller: controller, tag: "long", heading: "Long Date & Time", subHeading: "eg: Mission step off 01 January, 2024 9:01 AM")
-                    UNIXpickerForm(controller: controller, tag: "dayDateTime", heading: "Day, Date & Time", subHeading: "eg: Wednesday, January 01 2024 9:01 AM")
-                    UNIXpickerForm(controller: controller, tag: "short", heading: "Short Date", subHeading: "eg: Mission is on 01 January, 2024")
-                    UNIXpickerForm(controller: controller, tag: "abb", heading: "Abbreviated Date", subHeading: "eg: Mission is on the 01/01/2024")
-                    UNIXpickerForm(controller: controller, tag: "tShort", heading: "Just Time", subHeading: "eg: Misson is at 10:00 AM")
-                    UNIXpickerForm(controller: controller, tag: "rel", heading: "Relative Time", subHeading: "eg: 3 hours until mission starts")
+                List {
+                    ForEach(headings.indices, id: \.self) { index in
+                        NewUNIXpickerForm(
+                            title: headings[index],
+                            bodyOfText: bodyOfText[index],
+                            tag: dateFormatTypes[index],
+                            colour: colours[index],
+                            isPickerUP: $isPickerUP
+                        )
+                        .environmentObject(controller)
+                        .matchedGeometryEffect(id: dateFormatTypes[index], in: animation)
+                        .onTapGesture {
+                            tag = dateFormatTypes[index]
+                            heading = headings[index]
+                            subHeading = bodyOfText[index] + controller.setMessage(tag: tag)
+                            withAnimation(.spring) {
+                                isPickerUP = true
+                            }
+                        }
+                    }
                 }
+                .listStyle(.plain) // <- if you want a flat clean style
                 .navigationTitle("Discord Date & Time")
                 .navigationBarTitleDisplayMode(.large)
+
                 
-                NavigationLink(destination: HelpView()) {
-                    Image(systemName: "questionmark.circle.fill")
-                        .resizable()
-                        .frame(width: 70, height: 70)
-                        .foregroundColor(.blue)
-                        .shadow(radius: 10)
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        NavigationLink(destination: HelpView()) {
+                            Image(systemName: "questionmark.circle.fill")
+                                .resizable()
+                                .frame(width: 60, height: 60)
+                                .foregroundColor(.blue)
+                                .shadow(radius: 2)
+                        }
+                    }
                     
-                }.offset(x: -140, y: 270)
+                }
                 
-            }
+            }// end of ScrollView
             
-        }// end of ScrollView
+        }// ZStack
         
-            
-            
+        .overlay(
+            Group {
+                if isPickerUP {
+                    UNIXpickerForm(
+                        tag: tag,
+                        heading: heading,
+                        subHeading: subHeading
+                    )
+                    .cornerRadius(12)
+                    .shadow(radius: 20)
+                    .frame(width: 340, height: 300, alignment: .center)
+                    .matchedGeometryEffect(id: tag, in: animation)
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            isPickerUP = false // tap again to dismiss
+                        }
+                    }
+                }
+            }
+        )
+
+        
         }// some View
+    let headings: [String] = ["Relative Time", "Long Date", "Short Date", "Pretty Date", "Long Time", "Short Time" ]
+    let dateFormatTypes: [String] = [
+        "relative",
+        "long",
+        "short",
+        "prettyDate",
+        "timeLong",
+        "timeShort"
+    ]
+    let bodyOfText: [String] = [
+        "Guys, the mission will start approximately ",
+        "We have organised a mission for ",
+        "We have organised a mission for the ",
+        "We have organised a mission for the ",
+        "The mission will be kicking off at ",
+        "The mission will be kicking off at "
+    ]
+    let colours: [Color] = [.yellow, .red, .blue, .green, .brown, .orange]
+    
  }
 
 
 
 #Preview {
     HomeView()
+        .environmentObject(HomeViewController())
         
 }
 

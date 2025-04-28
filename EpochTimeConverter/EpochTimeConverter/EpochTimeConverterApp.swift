@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct EpochTimeConverterApp: App {
+    @StateObject var controller = HomeViewController()
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(controller)
         }
     }
 }
