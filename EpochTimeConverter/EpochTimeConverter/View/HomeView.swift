@@ -26,6 +26,14 @@ struct HomeView: View {
                 
                 List {
                     ForEach(headings.indices, id: \.self) { index in
+                        NavigationLink{
+                            UNIXpickerForm(
+                                tag: dateFormatTypes[index],
+                                heading: headings[index],
+                                subHeading: bodyOfText[index], colour: colours[index]
+                            )
+                        } label: {
+    
                         NewUNIXpickerForm(
                             title: headings[index],
                             bodyOfText: bodyOfText[index],
@@ -34,21 +42,14 @@ struct HomeView: View {
                             isPickerUP: $isPickerUP
                         )
                         .environmentObject(controller)
-                        .matchedGeometryEffect(id: dateFormatTypes[index], in: animation)
-                        .onTapGesture {
-                            tag = dateFormatTypes[index]
-                            heading = headings[index]
-                            subHeading = bodyOfText[index] + controller.setMessage(tag: tag)
-                            withAnimation(.spring) {
-                                isPickerUP = true
-                            }
-                        }
+                        
+                        }.buttonStyle(.bordered)
+                        
                     }
                 }
                 .listStyle(.plain) // <- if you want a flat clean style
-                .navigationTitle("Discord Date & Time")
+                .navigationTitle("Your Local Time")
                 .navigationBarTitleDisplayMode(.large)
-
                 
                 HStack {
                     Spacer()
@@ -59,7 +60,7 @@ struct HomeView: View {
                                 .resizable()
                                 .frame(width: 60, height: 60)
                                 .foregroundColor(.blue)
-                                .shadow(radius: 2)
+                                .padding(.trailing, 13)
                         }
                     }
                     
@@ -69,27 +70,6 @@ struct HomeView: View {
             
         }// ZStack
         
-        .overlay(
-            Group {
-                if isPickerUP {
-                    UNIXpickerForm(
-                        tag: tag,
-                        heading: heading,
-                        subHeading: subHeading
-                    )
-                    .cornerRadius(12)
-                    .shadow(radius: 20)
-                    .frame(width: 340, height: 300, alignment: .center)
-                    .matchedGeometryEffect(id: tag, in: animation)
-                    .onTapGesture {
-                        withAnimation(.spring()) {
-                            isPickerUP = false // tap again to dismiss
-                        }
-                    }
-                }
-            }
-        )
-
         
         }// some View
     let headings: [String] = ["Relative Time", "Long Date", "Short Date", "Pretty Date", "Long Time", "Short Time" ]
@@ -102,7 +82,7 @@ struct HomeView: View {
         "timeShort"
     ]
     let bodyOfText: [String] = [
-        "Guys, the mission will start approximately ",
+        "Guys, the mission will start approx ",
         "We have organised a mission for ",
         "We have organised a mission for the ",
         "We have organised a mission for the ",

@@ -54,7 +54,7 @@ class HomeViewController: ObservableObject {
             relativeFormatter.unitsStyle = .full // could also use .short or .abbreviated
             return relativeFormatter.localizedString(for: date, relativeTo: now)
             
-        case "short":
+        case "prettyDate":
             formatter.dateFormat = "dd/MM/yyyy"
             return formatter.string(from: date)
             
@@ -62,7 +62,7 @@ class HomeViewController: ObservableObject {
             formatter.dateFormat = "EEEE d MMMM yyyy" // "Tuesday 3 September 2025"
             return formatter.string(from: date)
             
-        case "prettyDate":
+        case "short":
             formatter.dateFormat = "d MMMM yyyy" // "3 September 2025"
             return formatter.string(from: date)
             
