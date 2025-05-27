@@ -20,13 +20,13 @@ class HomeViewController: ObservableObject {
     
     func setEpoch(tag:String)->String {
         switch tag {
-        case "long":
+        case "default":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):F>"
             return self.epochTime
-        case "short":
+        case "long":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):D>"
             return self.epochTime
-        case "prettyDate":
+        case "short":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):d>"
             return self.epochTime
         case "relative":
@@ -37,6 +37,12 @@ class HomeViewController: ObservableObject {
             return self.epochTime
         case "timeShort":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):t>"
+            return self.epochTime
+        case "longDateTime":
+            self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):F>"
+            return self.epochTime
+        case "shortDateTime":
+            self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):f>"
             return self.epochTime
         default:
             self.epochTime = "#ERROR"
@@ -54,15 +60,15 @@ class HomeViewController: ObservableObject {
             relativeFormatter.unitsStyle = .full // could also use .short or .abbreviated
             return relativeFormatter.localizedString(for: date, relativeTo: now)
             
-        case "prettyDate":
+        case "short":
             formatter.dateFormat = "dd/MM/yyyy"
             return formatter.string(from: date)
             
-        case "long":
+        case "default":
             formatter.dateFormat = "EEEE d MMMM yyyy" // "Tuesday 3 September 2025"
             return formatter.string(from: date)
             
-        case "short":
+        case "long":
             formatter.dateFormat = "d MMMM yyyy" // "3 September 2025"
             return formatter.string(from: date)
             
@@ -72,6 +78,14 @@ class HomeViewController: ObservableObject {
             
         case "timeShort":
             formatter.dateFormat = "h:mm a" // 12-hour time, like "2:35 PM"
+            return formatter.string(from: date)
+        
+        case "longDateTime":
+            formatter.dateFormat = "EEEE d MMMM yyyy h:mm a"
+            return formatter.string(from: date)
+        
+        case "shortDateTime":
+            formatter.dateFormat = "d MMM yyyy h:mm a"
             return formatter.string(from: date)
             
         default:

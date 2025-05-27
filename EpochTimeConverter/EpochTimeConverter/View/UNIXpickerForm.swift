@@ -19,6 +19,7 @@ struct UNIXpickerForm: View {
     let height: CGFloat = 40
     let radius: CGFloat = 12
     let colour: Color
+   
     
     @State var showAlert = false
     
@@ -91,6 +92,7 @@ struct UNIXpickerForm: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(Color.formGrey)
+                    
                     VStack(alignment: .leading) {
                         HStack() {
                             Image("brand")
@@ -109,9 +111,18 @@ struct UNIXpickerForm: View {
                             Spacer()
                         }// hstack title
                         
-                        Text("\(subHeading)" + controller.setMessage(tag: tag) )
-                            .font(.system(size: 17, weight: .medium))
-                            .padding(.horizontal, 16)
+                        HStack { // formatted text in the chat. eg. the mission will start in ...
+                            Text("\(subHeading)")
+                                .font(.system(size: 17, weight: .medium))
+                            +
+                            Text( controller.setMessage(tag: tag) )
+                                .font(.system(size: 17, weight: .black))
+                                .foregroundStyle(.primary)
+                                
+                            
+                                
+                        }
+                        .padding(.horizontal, 16)
                         
                         
                     } // vstack
@@ -160,45 +171,54 @@ struct Copied: Tip {
 
 struct NewUNIXpickerForm: View {
     @EnvironmentObject var controller: HomeViewController
+    @Environment(\.colorScheme) var themecheck
     let title: String
     let bodyOfText: String
     let tag: String
     let colour: Color
     @Binding var isPickerUP: Bool
     @State var showAlert = false
-    //@State var displayDate: Double
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(Color.formGrey)
-            VStack(alignment: .leading) {
-                HStack() {
-                    Image("brand")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
+
+            VStack(alignment: .leading, spacing: 8) {
+                // Title row
+                HStack(alignment: .top) {
+                    Circle()
                         .frame(width: 20)
-                        .clipShape(Circle())
-                        
-                    
+                        .foregroundStyle(colour)
+                        .opacity(0.6)
+
                     Text(title)
                         .font(.title2)
                         .fontWeight(.black)
                         .foregroundStyle(colour)
+
                     Image(systemName: "crown.fill")
                         .foregroundStyle(colour)
+
                     Spacer()
-                }// hstack title
-                
-                Text("\(bodyOfText)" + controller.setMessage(tag: tag) )
-                    .font(.subheadline)
-                    .padding(.horizontal, 16)
-                    
-                
-            } // vstack
-            .padding()
-            
-        } // Top zstack
-    }// some view
+                }
+
+                // Message block, now split and aligned
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(bodyOfText)
+                        .foregroundStyle(themecheck == .dark ? .white : .black)
+                        .font(.system(size: 17, weight: .medium))
+
+                    Text(" " + controller.setMessage(tag: tag))
+                        .foregroundStyle(themecheck == .dark ? .white : .black)
+                        .font(.system(size: 17, weight: .black))
+                }
+                .padding(.horizontal, 20)
+            }
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20))
+            .frame(maxWidth: .infinity, alignment: .leading) // ensures left alignment in any container
+        }
+    }
 }
 
 

@@ -13,6 +13,7 @@ struct HomeView: View {
     
     // instance of the controller for this view.
     @EnvironmentObject var controller: HomeViewController
+    @Environment(\.colorScheme) var themecheck
     @Namespace private var animation
     @State var isPickerUP = false
     // to pass the correct info to UNIXpickerForm
@@ -24,30 +25,34 @@ struct HomeView: View {
         NavigationView {
             ZStack { // places help button on top
                 
-                List {
+                ScrollView {
                     ForEach(headings.indices, id: \.self) { index in
                         NavigationLink{
-                            UNIXpickerForm(
-                                tag: dateFormatTypes[index],
-                                heading: headings[index],
-                                subHeading: bodyOfText[index], colour: colours[index]
-                            )
+                           
+                                UNIXpickerForm(
+                                    tag: dateFormatTypes[index],
+                                    heading: headings[index],
+                                    subHeading: bodyOfText[index], colour: colours[index]
+                                )
+                            
                         } label: {
     
-                        NewUNIXpickerForm(
-                            title: headings[index],
-                            bodyOfText: bodyOfText[index],
-                            tag: dateFormatTypes[index],
-                            colour: colours[index],
-                            isPickerUP: $isPickerUP
-                        )
-                        .environmentObject(controller)
+                            ZStack {
+                                NewUNIXpickerForm(
+                                    title: headings[index],
+                                    bodyOfText: bodyOfText[index],
+                                    tag: dateFormatTypes[index],
+                                    colour: colours[index],
+                                    isPickerUP: $isPickerUP
+                                )
+                                .environmentObject(controller)
+                            }
                         
-                        }.buttonStyle(.bordered)
+                        }
                         
                     }
                 }
-                .listStyle(.plain) // <- if you want a flat clean style
+                .padding(.horizontal, 20)
                 .navigationTitle("Your Local Time")
                 .navigationBarTitleDisplayMode(.large)
                 
@@ -72,14 +77,16 @@ struct HomeView: View {
         
         
         }// some View
-    let headings: [String] = ["Relative Time", "Long Date", "Short Date", "Pretty Date", "Long Time", "Short Time" ]
+    let headings: [String] = ["Relative Time", "Day & Date", "Short Date", "Long Date", "Long Time", "Short Time", "Short Date & Time", "Long Date & Time" ]
     let dateFormatTypes: [String] = [
         "relative",
-        "long",
+        "default",
         "short",
-        "prettyDate",
+        "long",
         "timeLong",
-        "timeShort"
+        "timeShort",
+        "shortDateTime",
+        "longDateTime"
     ]
     let bodyOfText: [String] = [
         "Guys, the mission will start approx ",
@@ -87,9 +94,11 @@ struct HomeView: View {
         "We have organised a mission for the ",
         "We have organised a mission for the ",
         "The mission will be kicking off at ",
-        "The mission will be kicking off at "
+        "The mission will be kicking off at ",
+        "We have organised a mission for the ",
+        "We have organised a mission for "
     ]
-    let colours: [Color] = [.yellow, .red, .blue, .green, .brown, .orange]
+    let colours: [Color] = [.indigo, .red, .blue, .green, .brown, .orange, .pink, .teal]
     
  }
 
