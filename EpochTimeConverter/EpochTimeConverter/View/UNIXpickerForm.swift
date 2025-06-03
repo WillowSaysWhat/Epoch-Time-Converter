@@ -19,6 +19,8 @@ struct UNIXpickerForm: View {
     let height: CGFloat = 40
     let radius: CGFloat = 12
     let colour: Color
+    
+
    
     
     @State var showAlert = false
@@ -35,6 +37,9 @@ struct UNIXpickerForm: View {
             //    .foregroundColor(Color.formGrey)
             
             VStack(alignment: .leading) {
+                
+                let textColor = (colour == .red) || (colour == .indigo) || (colour == .blue) || (colour == .pink) ? Color.white : Color.black
+                
                 Text(heading)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .bold()
@@ -50,12 +55,14 @@ struct UNIXpickerForm: View {
                         
                         
                                 }label: {
+                                    
+                       
                         ZStack {
                             RoundedRectangle(cornerRadius: radius)
                                 .frame(width: width, height: height)
                                 .foregroundStyle(colour)
                             Text("Apply")
-                                .foregroundColor(.black)
+                                .foregroundColor(textColor)
                         }
                     }
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
@@ -77,7 +84,7 @@ struct UNIXpickerForm: View {
                                 .foregroundStyle(colour)
                                 
                             Text("Copy")
-                                .foregroundColor(.black)
+                                .foregroundColor(textColor)
                         }
                     }
                 .alert(isPresented: $showAlert) { // popup that notifies the user.
@@ -184,9 +191,9 @@ struct NewUNIXpickerForm: View {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(Color.formGrey)
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading) {
                 // Title row
-                HStack(alignment: .top) {
+                HStack {
                     Circle()
                         .frame(width: 20)
                         .foregroundStyle(colour)
