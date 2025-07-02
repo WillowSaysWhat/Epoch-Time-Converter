@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B03224A2E1573DF001FE4FA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0322492E1573DF001FE4FA /* CardView.swift */; };
+		0B03225A2E157484001FE4FA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0322592E157484001FE4FA /* Card.swift */; };
 		0B04FED62C7DC90000BFE728 /* EpochTimeConverterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B04FED52C7DC90000BFE728 /* EpochTimeConverterApp.swift */; };
 		0B04FEDA2C7DC90100BFE728 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B04FED92C7DC90100BFE728 /* Assets.xcassets */; };
 		0B04FEDD2C7DC90100BFE728 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B04FEDC2C7DC90100BFE728 /* Preview Assets.xcassets */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B0322492E1573DF001FE4FA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		0B0322592E157484001FE4FA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		0B04FED22C7DC90000BFE728 /* Your Local Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Your Local Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B04FED52C7DC90000BFE728 /* EpochTimeConverterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochTimeConverterApp.swift; sourceTree = "<group>"; };
 		0B04FED92C7DC90100BFE728 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 				0BE699132C7F493A007358A0 /* UNIXpickerForm.swift */,
 				0B85A2AB2C85E1CC0009FC22 /* HelpView.swift */,
 				0BEE75792C87047400D6CA9F /* DDTicon.png */,
+				0B0322492E1573DF001FE4FA /* CardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			children = (
 				0B04FF042C7DCB2600BFE728 /* UNIXconvertion.swift */,
 				0BE699112C7F15F4007358A0 /* ColorAssetInit.swift */,
+				0B0322592E157484001FE4FA /* Card.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -304,11 +310,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BE699142C7F493A007358A0 /* UNIXpickerForm.swift in Sources */,
+				0B03225A2E157484001FE4FA /* Card.swift in Sources */,
 				0B04FF092C7DE85200BFE728 /* HomeViewController.swift in Sources */,
 				0B04FF032C7DC98500BFE728 /* HomeView.swift in Sources */,
 				0BE699122C7F15F4007358A0 /* ColorAssetInit.swift in Sources */,
 				0B85A2AC2C85E1CC0009FC22 /* HelpView.swift in Sources */,
 				0B04FF052C7DCB2600BFE728 /* UNIXconvertion.swift in Sources */,
+				0B03224A2E1573DF001FE4FA /* CardView.swift in Sources */,
 				0B04FED62C7DC90000BFE728 /* EpochTimeConverterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
