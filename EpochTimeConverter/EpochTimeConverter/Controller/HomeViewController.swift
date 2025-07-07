@@ -14,39 +14,40 @@ class HomeViewController: ObservableObject {
     // this stops all TextFields from updating when a single Copy button is pressed.
     @Published var date: Date = Calendar.current.date(byAdding: .hour, value: 2, to: .now)! // adds an hour to the example.
     @Published var epochTime: String = ""
+    @Published var screenSize: CGSize = .zero
     let model = UNIXconvertion()
     
     // convert date to UNIX
     
-    func setEpoch(tag:String)->String {
+    func setEpoch(tag:String) {
         switch tag {
         case "default":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):F>"
-            return self.epochTime
+            
         case "long":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):D>"
-            return self.epochTime
+            
         case "short":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):d>"
-            return self.epochTime
+            
         case "relative":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):R>"
-            return self.epochTime
+            
         case "timeLong":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):T>"
-            return self.epochTime
+            
         case "timeShort":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):t>"
-            return self.epochTime
+            
         case "longDateTime":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):F>"
-            return self.epochTime
+            
         case "shortDateTime":
             self.epochTime = "<t:\(self.model.convertToEpoch(date: self.date)):f>"
-            return self.epochTime
+            
         default:
             self.epochTime = "#ERROR"
-            return self.epochTime
+            
         }
     }
     func setMessage(tag: String) -> String {
